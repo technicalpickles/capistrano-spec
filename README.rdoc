@@ -9,7 +9,7 @@ In the wild, you'll mostly commonly come across two patterns:
 * files living under recipes/* that are autoloaded
 * files living under lib that are required from config/deploy.rb
 
-In these files, you can start using the capistrano top-level methods, like `namespace` or `task`, like:
+In these files, you can start using the capistrano top-level methods, like +namespace+ or +task+, like:
 
   # in recipes/speak.rb or lib/speak.rb
   task :speak do
@@ -17,9 +17,9 @@ In these files, you can start using the capistrano top-level methods, like `name
     puts message
   end
 
-Capistrano does some trickery to `require` and `load` so that if you `require` or `load`, the file is ran in the context of a Capistrano::Configuration, where all the `task` and `namespace` methods you know and love will.
+Capistrano does some trickery to +require+ and +load+ so that if you +require+ or +load+, the file is ran in the context of a Capistrano::Configuration, where all the +task+ and +namespace+ methods you know and love will be available.
 
-Some consider this a little gross, because it'd be easy to accidentally require/load this without being in the context of a Capistrano::Configuration. The answer to this is to pull use `Capistrano::Configuration.instance` to make sure it's evaluted in that context:
+Some consider this a little gross, because it'd be easy to accidentally require/load this without being in the context of a Capistrano::Configuration. The answer to this is to pull use +Capistrano::Configuration.instance+ to make sure it's evaluted in that context:
 
   # in recipes/speak.rb or lib/speak.rb
   Capistrano::Configuration.instance(true).load do
@@ -29,7 +29,7 @@ Some consider this a little gross, because it'd be easy to accidentally require/
     end
   end
 
-There's a problem though: it's not particular testable. You can't take some `Capistrano::Configuration` and easily bring your task into it.
+There's a problem though: it's not particular testable. You can't take some +Capistrano::Configuration+ and easily bring your task into it.
 
 So, here's what I recommend instead: create a method for taking a configuration, and adding your goodies to it.
 
@@ -67,9 +67,9 @@ Alright, we can start testing by making Capistrano::Configuration and load Capis
   end
 
 
-Now you have access to a configuration, so you can start poking around the `@configuration` object as you see fit.
+Now you have access to a configuration, so you can start poking around the +@configuration+ object as you see fit.
 
-Now, remember, by `set`ting values, you can access them using `fetch`:
+Now, remember, if you +set+ values, you can access them using +fetch+:
 
   before do
     @configuration.set :foo, 'bar'
