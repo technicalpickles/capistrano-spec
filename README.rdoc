@@ -1,15 +1,125 @@
 = capistrano-spec
 
-Description goes here.
+Capistrano... the final frontier of testing... well, maybe not final, but it is a frontier. I had set out to do some bug fixing and some BDDing on some of my capistrano code, but found it wasn't really obvious how to do so. As a result, I set out to write capistrano-spec and document how to test capistrano libraries.
+
+== Designing your capistrano extension
+
+In the wild, you'll mostly commonly come across two patterns:
+
+* files living under recipes/* that are autoloaded
+* files living under lib that are required from config/deploy.rb
+
+In these files, you can start using the capistrano top-level methods, like `namespace` or `task`, like:
+
+  # in recipes/speak.rb or lib/speak.rb
+  task :speak do
+    set :message, 'oh hai'
+    puts message
+  end
+
+Capistrano does some trickery to `require` and `load` so that if you `require` or `load`, the file is ran in the context of a Capistrano::Configuration, where all the `task` and `namespace` methods you know and love will.
+
+Some consider this a little gross, because it'd be easy to accidentally require/load this without being in the context of a Capistrano::Configuration. The answer to this is to pull use `Capistrano::Configuration.instance` to make sure it's evaluted in that context:
+
+  # in recipes/speak.rb or lib/speak.rb
+  Capistrano::Configuration.instance(true).load do
+    task :speak do
+      set :message, 'oh hai'
+      puts message
+    end
+  end
+
+There's a problem though: it's not particular testable. You can't take some `Capistrano::Configuration` and easily bring your task into it.
+
+So, here's what I recommend instead: create a method for taking a configuration, and adding your goodies to it.
+
+  require 'capistrano'
+  module Capistrano
+    module Speak
+      def self.load_into(configuration)
+        configuration.load do
+          task :speak do
+            set :message, 'oh hai'
+            puts message
+          end
+        end
+      end
+    end
+  end
+
+  # may as well load it if we have it
+  if Capistrano::Configuration.instance
+    Capistrano::Speak.load_into(Capistrano::Configuration.instance)
+  end
+
+Now, we're going to be able to test this. Behold!
+
+== Testing
+
+Alright, we can start testing by making Capistrano::Configuration and load Capistrano::Speak into it.
+
+  describe Capistrano::Speak, "loaded into a configuration" do
+    before do
+      @configuration = Capistrano::Configuration.new
+      Capistrano::Speak.load_into(@configuration)
+    end
+  
+  end
+
+
+Now you have access to a configuration, so you can start poking around the `@configuration` object as you see fit.
+
+Now, remember, by `set`ting values, you can access them using `fetch`:
+
+  before do
+    @configuration.set :foo, 'bar'
+  end
+  
+  it "should define foo" do
+    @configuration.fetch(:foo).should == 'bar'
+  end
+
+You can also find and execute tasks, so you can verify if you successfully set a value:
+
+
+  describe 'speak task' do
+    before do
+      @configuration.find_and_execute_task('speak')
+    end
+    
+    it "should define message" do
+      @configuration.fetch(:message).should == 'oh hai'
+    end
+  end
+
+One thing you might be wondering now is... that's cool, but what about working with remote servers? I have just the trick for you: extensions to Capistrano::Configuration to track what files were up or downloaded and what commands were run. Now, this is no substitution for manually testing your capistrano recipe by running it on the server, but it is good for sanity checking.
+
+  before do
+    @configuration = Capistrano::Configuration.new
+    @configuration.extend(Capistrano::Spec::ConfigurationExtension)
+  end
+
+  it "should run yes" do
+    @configuration.run "yes"
+    @configuration.should have_run("yes")
+  end
+
+  it "should upload foo" do
+    @configuration.upload 'foo', '/tmp/foo'
+    @configuration.should have_uploaded('foo').to('/tmp/foo')
+  end
+
+  it "should have gotten" do
+    @configuration.get '/tmp/bar', 'bar'
+    @configuration.should have_gotten('/tmp/bar').to('bar')
+  end
 
 == Note on Patches/Pull Requests
  
 * Fork the project.
 * Make your feature addition or bug fix.
-* Add tests for it. This is important so I don't break it in a
-  future version unintentionally.
-* Commit, do not mess with rakefile, version, or history.
-  (if you want to have your own version, that is fine but bump version in a commit by itself I can ignore when I pull)
+* Add tests for it. This is important so I don't break it in a future version unintentionally.
+* Commit, do not mess with rakefile, version, or history.  (if you want to have your own version, that is fine but bump version in a commit by itself I can ignore when I pull)
 * Send me a pull request. Bonus points for topic branches.
 
 == Copyright
