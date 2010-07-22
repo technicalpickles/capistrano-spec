@@ -2,6 +2,16 @@
 
 Capistrano... the final frontier of testing... well, maybe not final, but it is a frontier. I had set out to do some bug fixing and some BDDing on some of my capistrano code, but found it wasn't really obvious how to do so. As a result, I set out to write capistrano-spec and document how to test capistrano libraries.
 
+== Install
+
+You know the drill:
+
+  gem install capistrano-spec
+
+And require it in your +spec/spec_helper.rb+:
+
+  require 'capistrano-spec'
+
 == Designing your capistrano extension
 
 In the wild, you'll mostly commonly come across two patterns:
