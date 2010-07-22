@@ -8,7 +8,7 @@ begin
     gem.version = '0.1.0'
 
     gem.summary = %Q{Test your capistrano recipes}
-    gem.description = %Q{Helpers and matchers for capistrano}
+    gem.description = %Q{Helpers and matchers for testing capistrano}
     gem.email = "josh@technicalpickles.com"
     gem.homepage = "http://github.com/technicalpickles/capistrano-spec"
     gem.authors = ["Joshua Nichols"]
