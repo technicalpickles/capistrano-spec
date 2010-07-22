@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Joshua Nichols"]
-  s.date = %q{2010-07-20}
+  s.date = %q{2010-07-21}
   s.description = %q{Helpers and matchers for capistrano}
   s.email = %q{josh@technicalpickles.com}
   s.extra_rdoc_files = [
@@ -22,7 +22,9 @@ Gem::Specification.new do |s|
      "LICENSE",
      "README.rdoc",
      "Rakefile",
+     "capistrano-spec.gemspec",
      "lib/capistrano-spec.rb",
+     "lib/capistrano/spec.rb",
      "spec/capistrano-spec_spec.rb",
      "spec/spec.opts",
      "spec/spec_helper.rb"
