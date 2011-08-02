@@ -126,8 +126,8 @@ One thing you might be wondering now is... that's cool, but what about working w
 
 == Real world examples
 
- * [capistrano-mountaintop](https://github.com/technicalpickles/capistrano-mountaintop/blob/master/spec/capistrano-mountaintop_spec.rb)
- * [moonshine](https://github.com/railsmachine/moonshine/blob/master/spec/moonshine/capistrano_integration_spec.rb)
+* [capistrano-mountaintop](https://github.com/technicalpickles/capistrano-mountaintop/blob/master/spec/capistrano-mountaintop_spec.rb)
+* [moonshine](https://github.com/railsmachine/moonshine/blob/master/spec/moonshine/capistrano_integration_spec.rb)
 
 == Note on Patches/Pull Requests
  
