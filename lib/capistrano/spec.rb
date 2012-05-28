@@ -43,7 +43,7 @@ module Capistrano
     end
 
     module Matchers
-      extend ::Spec::Matchers::DSL
+      extend ::RSpec::Matchers::DSL
 
       define :callback do |task_name|
         extend Helpers
