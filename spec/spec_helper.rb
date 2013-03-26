@@ -4,6 +4,6 @@ require 'capistrano-spec'
 require 'rspec'
 require 'rspec/autorun'
 
-Spec::Runner.configure do |config|
-  
+RSpec.configure do |config|
+
 end
