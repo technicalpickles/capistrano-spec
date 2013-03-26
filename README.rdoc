@@ -124,13 +124,36 @@ One thing you might be wondering now is... that's cool, but what about working w
     @configuration.should have_gotten('/tmp/bar').to('bar')
   end
 
+You also test [http://rubydoc.info/github/capistrano/capistrano/master/Capistrano/Configuration/Callbacks](callbacks) to see if your tasks are being called at the right time:
+
+  require 'capistrano'
+  module Capistrano
+    module Speak
+      def self.load_into(configuration)
+        configuration.load do
+          before "deploy:finalize_update", "foo:bar"
+          namespace :foo do
+            task :bar do
+              set :message, 'before finalize'
+              puts message
+            end
+          end
+        end
+      end
+    end
+  end
+
+  it "performs foo:bar before deploy:finalize_update" do
+    @configuration.should callback('foo:bar').before('deploy:finalize_update')
+  end
+
 == Real world examples
 
 * [capistrano-mountaintop](https://github.com/technicalpickles/capistrano-mountaintop/blob/master/spec/capistrano-mountaintop_spec.rb)
 * [moonshine](https://github.com/railsmachine/moonshine/blob/master/spec/moonshine/capistrano_integration_spec.rb)
 
 == Note on Patches/Pull Requests
- 
+
 * Fork the project.
 * Make your feature addition or bug fix.
 * Add tests for it. This is important so I don't break it in a future version unintentionally.
