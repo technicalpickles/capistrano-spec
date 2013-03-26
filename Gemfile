@@ -1,8 +1,3 @@
-# A sample Gemfile
-source "https://rubygems.org"
+source "https://www.rubygems.org"
 
-group :test do
-  gem 'rspec'
-  gem 'rake'
-  gem 'jeweler'
-end
+gemspec
