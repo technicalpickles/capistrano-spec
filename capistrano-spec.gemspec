@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.version = "0.2.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["Joshua Nichols", "Karl Matthias", "petems"]
+  s.authors = ["Joshua Nichols", "Karl Matthias", "Peter M Souter"]
   s.date = "2013-03-27"
   s.description = "Helpers and matchers for testing capistrano"
   s.email = "josh@technicalpickles.com"
@@ -32,7 +32,7 @@ Gem::Specification.new do |s|
   ]
   s.homepage = "http://github.com/technicalpickles/capistrano-spec"
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.11"
+  s.rubygems_version = "1.8.23"
   s.summary = "Test your capistrano recipes"
 
   if s.respond_to? :specification_version then

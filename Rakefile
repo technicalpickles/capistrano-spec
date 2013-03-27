@@ -11,7 +11,7 @@ begin
     gem.description = %Q{Helpers and matchers for testing capistrano}
     gem.email = "josh@technicalpickles.com"
     gem.homepage = "http://github.com/technicalpickles/capistrano-spec"
-    gem.authors = ["Joshua Nichols", "Karl Matthias", "petems"]
+    gem.authors = ["Joshua Nichols", "Karl Matthias", "Peter M Souter"]
     gem.add_development_dependency "rspec", ">= 2.0.0"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
