@@ -12,7 +12,15 @@ module Capistrano
       def run(cmd, options={}, &block)
         runs[cmd] = {:options => options, :block => block}
         if (stub = stubbed_commands[cmd])
-          block.call stub[:channel], stub[:stream], stub[:data] if block_given?
+          raise ::Capistrano::CommandError if stub[:fail]
+          raise stub[:raise] if stub[:raise]
+
+          if block_given?
+            data = stub[:data]
+            data = stub[:with].call(cmd) if stub[:with].respond_to? :call
+
+            block.call stub[:channel], stub[:stream], data
+          end
         end
       end
 
