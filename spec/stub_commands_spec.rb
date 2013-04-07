@@ -58,8 +58,10 @@ describe 'Command stubbing' do
   end
 
   it 'should allow to stub command processing (2)' do
-    @configuration.stub_command 'pwd' do |cmd| cmd end
-    @configuration.remote_pwd.should == 'pwd'
+  	testvar = false
+    @configuration.stub_command 'pwd' do |cmd| testvar = true end
+    @configuration.no_block
+    testvar.should be_true
   end
 
   it 'should allow to stub command processing with error' do

@@ -15,12 +15,10 @@ module Capistrano
           raise ::Capistrano::CommandError if stub[:fail]
           raise stub[:raise] if stub[:raise]
 
-          if block_given?
-            data = stub[:data]
-            data = stub[:with].call(cmd) if stub[:with].respond_to? :call
+          data = stub[:data]
+          data = stub[:with].call(cmd) if stub[:with].respond_to? :call
 
-            block.call stub[:channel], stub[:stream], data
-          end
+          block.call stub[:channel], stub[:stream], data if block_given?
         end
       end
 
