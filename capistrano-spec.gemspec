@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "capistrano-spec"
-  s.version = "0.2.2"
+  s.version = "0.3.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["Joshua Nichols", "Karl Matthias", "Peter M Souter"]
-  s.date = "2013-04-02"
+  s.authors = ["Joshua Nichols", "Karl Matthias", "Peter M Souter", "Jan Graichen"]
+  s.date = "2013-04-07"
   s.description = "Helpers and matchers for testing capistrano"
   s.email = "josh@technicalpickles.com"
   s.extra_rdoc_files = [
@@ -28,15 +28,17 @@ Gem::Specification.new do |s|
     "lib/capistrano/spec.rb",
     "spec/capistrano-spec_spec.rb",
     "spec/spec.opts",
-    "spec/spec_helper.rb"
+    "spec/spec_helper.rb",
+    "spec/stub_commands_spec.rb",
+    "spec/uploaded_spec.rb"
   ]
   s.homepage = "http://github.com/technicalpickles/capistrano-spec"
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.23"
+  s.rubygems_version = "2.0.3"
   s.summary = "Test your capistrano recipes"
 
   if s.respond_to? :specification_version then
-    s.specification_version = 3
+    s.specification_version = 4
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_development_dependency(%q<rspec>, [">= 2.0.0"])

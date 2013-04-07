@@ -5,13 +5,13 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "capistrano-spec"
-    gem.version = '0.2.2'
+    gem.version = '0.3.0'
 
     gem.summary = %Q{Test your capistrano recipes}
     gem.description = %Q{Helpers and matchers for testing capistrano}
     gem.email = "josh@technicalpickles.com"
     gem.homepage = "http://github.com/technicalpickles/capistrano-spec"
-    gem.authors = ["Joshua Nichols", "Karl Matthias", "Peter M Souter"]
+    gem.authors = ["Joshua Nichols", "Karl Matthias", "Peter M Souter", "Jan Graichen"]
     gem.add_development_dependency "rspec", ">= 2.0.0"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
