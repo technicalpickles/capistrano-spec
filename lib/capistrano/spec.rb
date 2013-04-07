@@ -11,6 +11,9 @@ module Capistrano
 
       def run(cmd, options={}, &block)
         runs[cmd] = {:options => options, :block => block}
+        if (stub = stubed_commands[cmd])
+          block.call stub[:channel], stub[:stream], stub[:data]
+        end
       end
 
       def runs
@@ -24,7 +27,14 @@ module Capistrano
       def uploads
         @uploads ||= {}
       end
-      
+
+      def stubed_commands
+        @stubed_commands ||= {}
+      end
+
+      def stub_command(command, options = {})
+        stubed_commands[command] = { stream: :out, data: '' }.merge options
+      end
     end
 
     module Helpers
@@ -158,7 +168,7 @@ module Capistrano
         failure_message_for_should do |actual|
           "expected configuration to run #{cmd}, but did not"
         end
-        
+
       end
 
     end
