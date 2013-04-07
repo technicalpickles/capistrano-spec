@@ -57,6 +57,11 @@ describe 'Command stubbing' do
     @configuration.remote_pwd.should == 'pwd'
   end
 
+  it 'should allow to stub command processing (2)' do
+    @configuration.stub_command 'pwd' do |cmd| cmd end
+    @configuration.remote_pwd.should == 'pwd'
+  end
+
   it 'should allow to stub command processing with error' do
     @configuration.stub_command 'pwd', raise: ::Capistrano::CommandError
     expect { @configuration.no_block }.to raise_error(::Capistrano::CommandError)

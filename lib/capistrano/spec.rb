@@ -40,7 +40,8 @@ module Capistrano
         @stubbed_commands ||= {}
       end
 
-      def stub_command(command, options = {})
+      def stub_command(command, options = {}, &block)
+        options[:with] = block if block_given?
         stubbed_commands[command] = { :stream => :out, :data => '' }.merge options
       end
     end
