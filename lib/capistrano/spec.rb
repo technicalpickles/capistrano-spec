@@ -141,13 +141,13 @@ module Capistrano
       end
 
       define :have_uploaded do |path|
+        @to = nil # Reset `to` because it will influence next match otherwise.
+
         match do |configuration|
-          upload = configuration.uploads[path]
-          if @to
-            upload && upload[:to] == @to
-          else
-            upload
-          end
+          uploads = configuration.uploads
+          uploads = uploads.select { |f, u| f == path } if path
+          uploads = uploads.select { |f, u| u[:to] == @to } if @to
+          uploads.any?
         end
 
         def to(to)
