@@ -23,22 +23,22 @@ describe 'Command stubbing' do
   end
 
   it 'should allow to stub command output' do
-    @configuration.stub_command 'pwd', data: '/stubded/path'
+    @configuration.stub_command 'pwd', :data => '/stubded/path'
     @configuration.remote_pwd.should == '/stubded/path'
   end
 
   it 'should allow to stub sudo command output' do
-    @configuration.stub_command "sudo -p 'sudo password: ' pwd", data: '/stubbed/path'
+    @configuration.stub_command "sudo -p 'sudo password: ' pwd", :data => '/stubbed/path'
     @configuration.remote_sudo_pwd.should == '/stubbed/path'
   end
 
   it 'should allow to stub custom command output' do
-    @configuration.stub_command 'pwd', data: '/stubbed/path'
+    @configuration.stub_command 'pwd', :data => '/stubbed/path'
     @configuration.custom_pwd.should == 'out: /stubbed/path'
   end
 
   it 'should allow to stub stream' do
-    @configuration.stub_command 'pwd', data: '/stubbed/path', stream: :err
+    @configuration.stub_command 'pwd', :data => '/stubbed/path', :stream => :err
     @configuration.custom_pwd.should == 'err: /stubbed/path'
   end
 end

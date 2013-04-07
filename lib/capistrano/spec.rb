@@ -11,7 +11,7 @@ module Capistrano
 
       def run(cmd, options={}, &block)
         runs[cmd] = {:options => options, :block => block}
-        if (stub = stubed_commands[cmd])
+        if (stub = stubbed_commands[cmd])
           block.call stub[:channel], stub[:stream], stub[:data]
         end
       end
@@ -28,12 +28,12 @@ module Capistrano
         @uploads ||= {}
       end
 
-      def stubed_commands
-        @stubed_commands ||= {}
+      def stubbed_commands
+        @stubbed_commands ||= {}
       end
 
       def stub_command(command, options = {})
-        stubed_commands[command] = { stream: :out, data: '' }.merge options
+        stubbed_commands[command] = { :stream => :out, :data => '' }.merge options
       end
     end
 
