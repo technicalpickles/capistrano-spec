@@ -34,11 +34,11 @@ Gem::Specification.new do |s|
   ]
   s.homepage = "http://github.com/technicalpickles/capistrano-spec"
   s.require_paths = ["lib"]
-  s.rubygems_version = "2.0.3"
+  s.rubygems_version = "1.8.25"
   s.summary = "Test your capistrano recipes"
 
   if s.respond_to? :specification_version then
-    s.specification_version = 4
+    s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_development_dependency(%q<rspec>, [">= 2.0.0"])
