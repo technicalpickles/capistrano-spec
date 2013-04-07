@@ -12,7 +12,7 @@ module Capistrano
       def run(cmd, options={}, &block)
         runs[cmd] = {:options => options, :block => block}
         if (stub = stubbed_commands[cmd])
-          block.call stub[:channel], stub[:stream], stub[:data]
+          block.call stub[:channel], stub[:stream], stub[:data] if block_given?
         end
       end
 

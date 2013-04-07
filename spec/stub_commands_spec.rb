@@ -19,6 +19,11 @@ describe 'Command stubbing' do
           return "#{stream}: #{data}"
         end
       end
+
+      def no_block
+      	run 'pwd'
+      	nil
+      end
     end
   end
 
@@ -40,5 +45,10 @@ describe 'Command stubbing' do
   it 'should allow to stub stream' do
     @configuration.stub_command 'pwd', :data => '/stubbed/path', :stream => :err
     @configuration.custom_pwd.should == 'err: /stubbed/path'
+  end
+
+  it 'should allow to stub commands without block' do
+    @configuration.stub_command 'pwd'
+    expect { @configuration.no_block.should }.to_not raise_error(NoMethodError)
   end
 end
