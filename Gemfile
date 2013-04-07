@@ -5,4 +5,5 @@ group :test do
   gem 'rspec'
   gem 'rake'
   gem 'jeweler'
+  gem 'capistrano'
 end
