@@ -11,6 +11,15 @@ module Capistrano
 
       def run(cmd, options={}, &block)
         runs[cmd] = {:options => options, :block => block}
+        if (stub = stubbed_commands[cmd])
+          raise ::Capistrano::CommandError if stub[:fail]
+          raise stub[:raise] if stub[:raise]
+
+          data = stub[:data]
+          data = stub[:with].call(cmd) if stub[:with].respond_to? :call
+
+          block.call stub[:channel], stub[:stream], data if block_given?
+        end
       end
 
       def runs
@@ -25,6 +34,14 @@ module Capistrano
         @uploads ||= {}
       end
 
+      def stubbed_commands
+        @stubbed_commands ||= {}
+      end
+
+      def stub_command(command, options = {}, &block)
+        options[:with] = block if block_given?
+        stubbed_commands[command] = { :stream => :out, :data => '' }.merge options
+      end
     end
 
     module Helpers

@@ -73,7 +73,7 @@ Alright, we can start testing by making Capistrano::Configuration and load Capis
       @configuration = Capistrano::Configuration.new
       Capistrano::Speak.load_into(@configuration)
     end
-  
+
   end
 
 
@@ -84,7 +84,7 @@ Now, remember, if you +set+ values, you can access them using +fetch+:
   before do
     @configuration.set :foo, 'bar'
   end
-  
+
   it "should define foo" do
     @configuration.fetch(:foo).should == 'bar'
   end
@@ -96,7 +96,7 @@ You can also find and execute tasks, so you can verify if you successfully set a
     before do
       @configuration.find_and_execute_task('speak')
     end
-    
+
     it "should define message" do
       @configuration.fetch(:message).should == 'oh hai'
     end
@@ -145,6 +145,37 @@ You also test [callbacks](http://rubydoc.info/github/capistrano/capistrano/maste
 
   it "performs foo:bar before deploy:finalize_update" do
     @configuration.should callback('foo:bar').before('deploy:finalize_update')
+  end
+
+You can also stub requests if you need to access their output:
+
+  task :pwd do
+    set :pwd, capture('pwd')
+  end
+
+  it 'should capture working directory' do
+    @configuration.stub_command 'pwd', data: '/path/to/working/dir'
+    @configuration.fetch(:pwd).should == '/path/to/working/dir'
+  end
+
+Additional options are +channel+ and +stream+ for testing custom +run+ blocks:
+
+  task :custom do
+    invoke_command 'pwd', :via => :sudo do |ch, stream, data|
+      # magical foo
+    end
+  end
+
+As +sudo+ and +invoke_command+ use +run+ internal and +capture+ uses
++invoke_command+ they are also stub-able by specifying the exact command.
+
+  task :sudo_pwd do
+    set :pwd, capture('pwd', :via => :sudo)
+  end
+
+  it 'should capture sudo working directory' do
+    @configuration.stub_command 'sudo -p 'sudo password: ' pwd', data: '/sudo/dir'
+    @configuration.fetch(:pwd).should == '/sudo/dir'
   end
 
 == Real world examples
