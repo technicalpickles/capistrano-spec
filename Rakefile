@@ -5,7 +5,7 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "capistrano-spec"
-    gem.version = '0.3.0'
+    gem.version = '0.3.1'
 
     gem.summary = %Q{Test your capistrano recipes}
     gem.description = %Q{Helpers and matchers for testing capistrano}
