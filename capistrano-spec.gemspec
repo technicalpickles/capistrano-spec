@@ -35,7 +35,7 @@ Gem::Specification.new do |s|
   ]
   s.homepage = "http://github.com/technicalpickles/capistrano-spec"
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.25"
+  s.rubygems_version = "1.8.23"
   s.summary = "Test your capistrano recipes"
 
   if s.respond_to? :specification_version then
