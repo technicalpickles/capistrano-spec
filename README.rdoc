@@ -1,5 +1,7 @@
 = capistrano-spec
 
+{<img src="https://travis-ci.org/technicalpickles/capistrano-spec.png?branch=master" alt="Build Status" />}[https://travis-ci.org/technicalpickles/capistrano-spec]
+
 Capistrano... the final frontier of testing... well, maybe not final, but it is a frontier. I had set out to do some bug fixing and some BDDing on some of my capistrano code, but found it wasn't really obvious how to do so. As a result, I set out to write capistrano-spec and document how to test capistrano libraries.
 
 == Install
