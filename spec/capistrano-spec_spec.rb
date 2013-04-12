@@ -1,15 +1,15 @@
 require 'spec_helper'
 require 'capistrano'
 
-require_relative 'recipe/FakeRecipe'
+require File.expand_path('../recipe/fakerecipe', __FILE__)
 
 describe Capistrano::Spec do
 
   before do
     @configuration = Capistrano::Configuration.new
     @configuration.extend(Capistrano::Spec::ConfigurationExtension)
-    @configuration.extend(Capistrano::FakeRecipe)
-    Capistrano::FakeRecipe.load_into(@configuration)
+    @configuration.extend(Capistrano::Fakerecipe)
+    Capistrano::Fakerecipe.load_into(@configuration)
   end
 
   describe Capistrano::Spec::Matchers do

@@ -1,6 +1,6 @@
 require 'capistrano'
   module Capistrano
-    module FakeRecipe
+    module Fakerecipe
       def self.load_into(configuration)
         configuration.load do
           before "fake:stuff_and_things", "fake:thing"
