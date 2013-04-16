@@ -22,23 +22,25 @@ describe 'Capistrano has uploaded' do
     end
   end
 
+  subject(:configuration) { @configuration }
+
   it 'some file' do
-    @configuration.upload 'source.file', 'target.file'
-    @configuration.should have_uploaded
+    configuration.upload 'source.file', 'target.file'
+    expect{ should have_uploaded }
   end
 
   it 'a specific file to a specific location' do
-    @configuration.upload_from_to
-    @configuration.should have_uploaded('source.file').to('target.file')
+    configuration.upload_from_to
+    expect{ should have_uploaded('source.file').to('target.file') }
   end
 
   it 'a specific file to some location' do
-    @configuration.upload_from
-    @configuration.should have_uploaded('source.file')
+    configuration.upload_from
+    expect{ should have_uploaded('source.file') }
   end
 
   it 'some file to a specific location' do
-    @configuration.upload_to
-    @configuration.should have_uploaded.to('target.file')
+    configuration.upload_to
+    expect{ should have_uploaded.to('target.file') }
   end
 end
