@@ -12,17 +12,17 @@ describe Capistrano::Spec do
     Capistrano::Fakerecipe.load_into(@configuration)
   end
 
-  subject(:configuration) { @configuration }
+  subject(:fake_recipe) { @configuration }
 
   describe 'have_run' do
 
     it "will not raise error when run is in recipe" do
-      configuration.find_and_execute_task('fake:thing')
+      fake_recipe.find_and_execute_task('fake:thing')
       expect{ should have_run("do some stuff")}.to_not raise_error(RSpec::Expectations::ExpectationNotMetError, /expected configuration to run .*\s*, but did not/)
     end
 
     it "will raise error when run not in recipe" do
-      configuration.find_and_execute_task('fake:thing')
+      fake_recipe.find_and_execute_task('fake:thing')
       expect{ should have_run("don't find me")}.to raise_error(RSpec::Expectations::ExpectationNotMetError, /expected configuration to run .*\s*, but did not/)
     end
 
@@ -31,24 +31,24 @@ describe Capistrano::Spec do
   describe 'have_uploaded' do
 
     it "will not raise error when upload is in recipe" do
-      configuration.find_and_execute_task('fake:thing')
+      fake_recipe.find_and_execute_task('fake:thing')
       expect{ should have_uploaded('foo').to('/tmp/foo')}.to_not raise_error(RSpec::Expectations::ExpectationNotMetError, /expected configuration to upload .*\s* to .*\s* but did not/)
     end
 
     it "will raise error when run upload not in recipe" do
-      configuration.find_and_execute_task('fake:thing')
+      fake_recipe.find_and_execute_task('fake:thing')
       expect{ should have_uploaded('bar').to('/tmp/bar')}.to raise_error(RSpec::Expectations::ExpectationNotMetError, /expected configuration to upload .*\s* to .*\s* but did not/)
     end
   end
 
   describe 'have_gotten' do
     it "will not raise error when get is in recipe" do
-      configuration.find_and_execute_task('fake:thing')
+      fake_recipe.find_and_execute_task('fake:thing')
       expect{ should have_gotten('/tmp/baz').to('baz')}.to_not raise_error(RSpec::Expectations::ExpectationNotMetError, /expected configuration to get .*\s* to .*\s* but did not/)
     end
 
     it "will raise error when get not in recipe" do
-      configuration.find_and_execute_task('fake:thing')
+      fake_recipe.find_and_execute_task('fake:thing')
       expect{ should have_gotten('/tmp/blegga').to('blegga')}.to raise_error(RSpec::Expectations::ExpectationNotMetError, /expected configuration to get .*\s* to .*\s* but did not/)
     end
   end
