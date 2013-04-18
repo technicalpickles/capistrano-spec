@@ -14,30 +14,6 @@ describe Capistrano::Spec do
 
   subject(:configuration) { @configuration }
 
-  describe Capistrano::Spec::Matchers do
-
-    before do
-      foo = double(foo)
-    end
-
-    it "has a #callback matcher" do
-      expect{ should callback(foo)}.to_not raise_error(NoMethodError)
-    end
-
-    it "has a #have_uploaded matcher" do
-      expect{ should have_uploaded(foo)}.to_not raise_error(NoMethodError)
-    end
-
-    it "has a #have_run matcher" do
-      expect{ should have_run(foo)}.to_not raise_error(NoMethodError)
-    end
-
-    it "has a #stub_command matcher" do
-      expect{ should stub_command(foo)}.to_not raise_error(NoMethodError)
-    end
-
-  end
-
   describe 'have_run' do
 
     it "will not raise error when run is in recipe" do
