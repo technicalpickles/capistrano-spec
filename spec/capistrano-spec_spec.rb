@@ -55,12 +55,16 @@ describe Capistrano::Spec do
 
   describe 'callback' do
 
-    it "will not raise error when `before` callback has occured" do
-      expect{ should callback('fake:thing').before('fake:stuff_and_things')}.to_not raise_error(RSpec::Expectations::ExpectationNotMetError, /expected configuration to callback .*\s* before .*\s*, but did not/)
+    ['fake:before_this_execute_thing', "fake:before_this_also_execute_thing"].each do |task|
+      it "will not raise error when `before` callback has occured for #{task}" do
+        fake_recipe.should callback('fake:thing').before(task)
+      end
     end
 
-    it "will not raise error when `after` callback has occured" do
-      expect{ should callback('fake:other_thing').after('fake:thing')}.to_not raise_error(RSpec::Expectations::ExpectationNotMetError, /expected configuration to callback .*\s* after .*\s*, but did not/)
+    ['fake:after_this_execute_thing', "fake:after_this_also_execute_thing"].each do |task|
+      it "will not raise error when `after` callback has occured for #{task}" do
+        fake_recipe.should callback('fake:thing').after(task)
+      end
     end
   end
 
