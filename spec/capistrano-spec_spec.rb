@@ -1,6 +1,5 @@
 require 'spec_helper'
 require 'capistrano'
-
 require File.expand_path('../recipe/fakerecipe', __FILE__)
 
 describe Capistrano::Spec do
