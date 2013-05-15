@@ -1,4 +1,3 @@
-
 module Capistrano
   module Spec
     module ConfigurationExtension
