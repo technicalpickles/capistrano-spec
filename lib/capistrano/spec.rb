@@ -70,14 +70,12 @@ module Capistrano
           callbacks = find_callback(configuration, @on, @task)
 
           if callbacks
-            @callback = callbacks.first
-
-            if @callback && @after_task_name
+            if @after_task_name
               @after_task = configuration.find_task(@after_task_name)
-              @callback.applies_to?(@after_task)
-            elsif @callback && @before_task_name
+              callbacks.any? { |callback| callback.applies_to?(@after_task) }
+            elsif @before_task_name
               @before_task = configuration.find_task(@before_task_name)
-              @callback.applies_to?(@before_task)
+              callbacks.any? { |callback| callback.applies_to?(@before_task) }
             else
               ! @callback.nil?
             end
