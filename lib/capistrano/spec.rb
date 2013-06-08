@@ -176,6 +176,56 @@ module Capistrano
 
       end
 
+      define :have_put do |content|
+        @to = nil
+
+        match do |configuration|
+          uploads = configuration.uploads.reduce([]) do |memo, (upload, options)|
+            # the {#put} method creates a {StringIO} object.
+            # @see {StringIO#string}
+            if upload.respond_to?(:string) && upload.string == content
+              memo << options
+            end
+
+            memo
+          end
+
+          if @to
+            uploads.any? { |upload| upload[:to] == @to }
+          else
+            !uploads.empty?
+          end
+        end
+
+        def to(path)
+          @to = path
+          self
+        end
+
+        failure_message_for_should do |configuration|
+          if @to
+            "expected configuration to put #{content.inspect} to #{@to.inspect}, but did not"
+          else
+            "expected configuration to put #{content.inspect}, but did not"
+          end
+        end
+
+        failure_message_for_should_not do |configuration|
+          if @to
+            "expected configuration to not put #{content.inspect} to #{@to.inspect}, but did"
+          else
+            "expected configuration to not put #{content.inspect}, but did"
+          end
+        end
+
+        description do
+          if @to
+            "puts the content #{content.inspect} to #{@to.inspect}"
+          else
+            "puts the content #{content.inspect}"
+          end
+        end
+      end
     end
   end
 end

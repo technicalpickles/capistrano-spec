@@ -14,6 +14,7 @@ require 'capistrano'
               run('do some stuff')
               upload("foo", "/tmp/foo")
               get('/tmp/baz', 'baz')
+              put('fake content', '/tmp/put')
             end
             desc "More fake tasks!"
             task :before_this_execute_thing do
