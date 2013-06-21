@@ -126,6 +126,11 @@ One thing you might be wondering now is... that's cool, but what about working w
     @configuration.should have_gotten('/tmp/bar').to('bar')
   end
 
+  it "should have put" do
+    @configuration.put 'some: content', '/config.yml'
+    @configuration.should have_put('some: content').to('/config.yml')
+  end
+
 You also test [callbacks](http://rubydoc.info/github/capistrano/capistrano/master/Capistrano/Configuration/Callbacks) to see if your tasks are being called at the right time:
 
   require 'capistrano'

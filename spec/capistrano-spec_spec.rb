@@ -67,4 +67,38 @@ describe Capistrano::Spec do
     end
   end
 
+  describe 'have_put' do
+    context 'when a path is given' do
+      it "will not raise error when put is in recipe" do
+        fake_recipe.find_and_execute_task('fake:thing')
+        expect do
+          should have_put('fake content').to('/tmp/put')
+        end.to_not raise_error(RSpec::Expectations::ExpectationNotMetError, /expected configuration to put .*\s* to .*\s*, but did not/)
+      end
+
+      it "will raise error when put is not in recipe" do
+        fake_recipe.find_and_execute_task('fake:thing')
+        expect do
+          should have_put('real content').to('/tmp/wherever')
+        end.to raise_error(RSpec::Expectations::ExpectationNotMetError, /expected configuration to put .*\s* to .*\s*, but did not/)
+      end
+    end
+
+    context 'when a path is not given' do
+      it "will not raise error when put is in recipe" do
+        fake_recipe.find_and_execute_task('fake:thing')
+        expect do
+          should have_put('fake content')
+        end.to_not raise_error(RSpec::Expectations::ExpectationNotMetError, /expected configuration to put .*\s*, but did not/)
+      end
+
+      it "will raise error when put is not in recipe" do
+        fake_recipe.find_and_execute_task('fake:thing')
+        expect do
+          should have_put('real content')
+        end.to raise_error(RSpec::Expectations::ExpectationNotMetError, /expected configuration to put .*\s*, but did not/)
+      end
+    end
+  end
+
 end
