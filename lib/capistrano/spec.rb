@@ -180,15 +180,11 @@ module Capistrano
         @to = nil
 
         match do |configuration|
-          uploads = configuration.uploads.reduce([]) do |memo, (upload, options)|
+          uploads = configuration.uploads.select do |upload, _|
             # the {#put} method creates a {StringIO} object.
             # @see {StringIO#string}
-            if upload.respond_to?(:string) && upload.string == content
-              memo << options
-            end
-
-            memo
-          end
+            upload.respond_to?(:string) && upload.string == content
+          end.values
 
           if @to
             uploads.any? { |upload| upload[:to] == @to }
