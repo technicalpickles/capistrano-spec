@@ -5,8 +5,12 @@ require 'capistrano'
         configuration.load do
           before "fake:before_this_execute_thing", "fake:thing"
           before "fake:before_this_also_execute_thing", "fake:thing"
+          before "outside:undefined_task", "fake:thing"
+
           after "fake:after_this_execute_thing", "fake:thing"
           after "fake:after_this_also_execute_thing", "fake:thing"
+          after "outside:undefined_task", "fake:thing"
+
           namespace :fake do
             desc "thing and run fake manifests"
             task :thing do
@@ -24,10 +28,16 @@ require 'capistrano'
             task :before_this_also_execute_thing do
               #
             end
+            task :before_this_dont_execute_thing do
+              #
+            end
             task :after_this_execute_thing do
               #
             end
             task :after_this_also_execute_thing do
+              #
+            end
+            task :after_this_dont_execute_thing do
               #
             end
           end

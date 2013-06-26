@@ -53,16 +53,55 @@ describe Capistrano::Spec do
   end
 
   describe 'callback' do
+    context 'before callbacks' do
+      ['fake:before_this_execute_thing',
+       'fake:before_this_also_execute_thing',
+       'outside:undefined_task'].each do |task|
+        it "will not raise error when `before` callback has occured for #{task}" do
+          expect do
+            should callback('fake:thing').before(task)
+          end.to_not raise_error(
+            RSpec::Expectations::ExpectationNotMetError,
+            /expected configuration to callback .*\s* before .*\s*, but did not/
+          )
+        end
+      end
 
-    ['fake:before_this_execute_thing', "fake:before_this_also_execute_thing"].each do |task|
-      it "will not raise error when `before` callback has occured for #{task}" do
-        fake_recipe.should callback('fake:thing').before(task)
+      ['undefined_task', 'fake:before_this_dont_execute_thing'].each do |task|
+        it "will raise error when `before` callback hasn't occured for '#{task}'" do
+          expect do
+            should_not callback('fake:thing').before(task)
+          end.to_not raise_error(
+            RSpec::Expectations::ExpectationNotMetError,
+            /expected configuration to not callback .*\s* before .*\s*, but did/
+          )
+        end
       end
     end
 
-    ['fake:after_this_execute_thing', "fake:after_this_also_execute_thing"].each do |task|
-      it "will not raise error when `after` callback has occured for #{task}" do
-        fake_recipe.should callback('fake:thing').after(task)
+    context 'after callbacks' do
+      ['fake:after_this_execute_thing',
+       'fake:after_this_also_execute_thing',
+       'outside:undefined_task'].each do |task|
+        it "will not raise error when `after` callback has occured for #{task}" do
+          expect do
+            should callback('fake:thing').after(task)
+          end.to_not raise_error(
+            RSpec::Expectations::ExpectationNotMetError,
+            /expected configuration to callback .*\s* after .*\s*, but did not/
+          )
+        end
+      end
+
+      ['undefined_task', 'fake:after_this_dont_execute_thing'].each do |task|
+        it "will raise error when `after` callback hasn't occured for '#{task}'" do
+          expect do
+            should_not callback('fake:thing').after(task)
+          end.to_not raise_error(
+            RSpec::Expectations::ExpectationNotMetError,
+            /expected configuration to not callback .*\s* after .*\s*, but did/
+          )
+        end
       end
     end
   end
