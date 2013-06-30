@@ -5,7 +5,9 @@ require 'capistrano-spec'
 require 'rspec'
 require 'rspec/autorun'
 
+Dir["./spec/support/**/*.rb"].sort.each { |f| require f }
+
 RSpec.configure do |config|
-	config.include Capistrano::Spec::Matchers
-	config.include Capistrano::Spec::Helpers
+  config.include Capistrano::Spec::Matchers
+  config.include Capistrano::Spec::Helpers
 end

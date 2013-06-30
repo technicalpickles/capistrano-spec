@@ -53,16 +53,47 @@ describe Capistrano::Spec do
   end
 
   describe 'callback' do
+    context 'before callbacks' do
+      it_should_behave_like 'correct before callback' do
+        let(:task_name) { 'fake:before_this_execute_thing' }
+      end
 
-    ['fake:before_this_execute_thing', "fake:before_this_also_execute_thing"].each do |task|
-      it "will not raise error when `before` callback has occured for #{task}" do
-        fake_recipe.should callback('fake:thing').before(task)
+      it_should_behave_like 'correct before callback' do
+        let(:task_name) { 'fake:before_this_also_execute_thing' }
+      end
+
+      it_should_behave_like 'correct before callback' do
+        let(:task_name) { 'outside:undefined_task' }
+      end
+
+      it_should_behave_like 'incorrect before callback' do
+        let(:task_name) { 'undefined_task' }
+      end
+
+      it_should_behave_like 'incorrect before callback' do
+        let(:task_name) { 'fake:before_this_dont_execute_thing' }
       end
     end
 
-    ['fake:after_this_execute_thing', "fake:after_this_also_execute_thing"].each do |task|
-      it "will not raise error when `after` callback has occured for #{task}" do
-        fake_recipe.should callback('fake:thing').after(task)
+    context 'after callbacks' do
+      it_should_behave_like 'correct after callback' do
+        let(:task_name) { 'fake:after_this_execute_thing' }
+      end
+
+      it_should_behave_like 'correct after callback' do
+        let(:task_name) { 'fake:after_this_also_execute_thing' }
+      end
+
+      it_should_behave_like 'correct after callback' do
+        let(:task_name) { 'outside:undefined_task' }
+      end
+
+      it_should_behave_like 'incorrect after callback' do
+        let(:task_name) { 'undefined_task' }
+      end
+
+      it_should_behave_like 'incorrect after callback' do
+        let(:task_name) { 'fake:after_this_dont_execute_thing' }
       end
     end
   end
@@ -73,14 +104,20 @@ describe Capistrano::Spec do
         fake_recipe.find_and_execute_task('fake:thing')
         expect do
           should have_put('fake content').to('/tmp/put')
-        end.to_not raise_error(RSpec::Expectations::ExpectationNotMetError, /expected configuration to put .*\s* to .*\s*, but did not/)
+        end.to_not raise_error(
+          RSpec::Expectations::ExpectationNotMetError,
+          /expected configuration to put .*\s* to .*\s*, but did not/
+        )
       end
 
       it "will raise error when put is not in recipe" do
         fake_recipe.find_and_execute_task('fake:thing')
         expect do
           should have_put('real content').to('/tmp/wherever')
-        end.to raise_error(RSpec::Expectations::ExpectationNotMetError, /expected configuration to put .*\s* to .*\s*, but did not/)
+        end.to raise_error(
+          RSpec::Expectations::ExpectationNotMetError,
+          /expected configuration to put .*\s* to .*\s*, but did not/
+        )
       end
     end
 
@@ -89,14 +126,20 @@ describe Capistrano::Spec do
         fake_recipe.find_and_execute_task('fake:thing')
         expect do
           should have_put('fake content')
-        end.to_not raise_error(RSpec::Expectations::ExpectationNotMetError, /expected configuration to put .*\s*, but did not/)
+        end.to_not raise_error(
+          RSpec::Expectations::ExpectationNotMetError,
+          /expected configuration to put .*\s*, but did not/
+        )
       end
 
       it "will raise error when put is not in recipe" do
         fake_recipe.find_and_execute_task('fake:thing')
         expect do
           should have_put('real content')
-        end.to raise_error(RSpec::Expectations::ExpectationNotMetError, /expected configuration to put .*\s*, but did not/)
+        end.to raise_error(
+          RSpec::Expectations::ExpectationNotMetError,
+          /expected configuration to put .*\s*, but did not/
+        )
       end
     end
   end

@@ -57,6 +57,18 @@ module Capistrano
         end
       end
 
+      def task_callable?(configuration, callbacks, task_name)
+        task = find_task(configuration, task_name) || stub_task(task_name)
+        callbacks.any? { |callback| callback.applies_to?(task) }
+      end
+
+      def find_task(configuration, task_name)
+        configuration.find_task(task_name)
+      end
+
+      def stub_task(task_name)
+        Struct.new(:fully_qualified_name).new(task_name)
+      end
     end
 
     module Matchers
@@ -66,16 +78,14 @@ module Capistrano
         extend Helpers
 
         match do |configuration|
-          @task = configuration.find_task(task_name)
-          callbacks = find_callback(configuration, @on, @task)
+          task = configuration.find_task(task_name)
+          callbacks = find_callback(configuration, @on, task)
 
           if callbacks
             if @after_task_name
-              @after_task = configuration.find_task(@after_task_name)
-              callbacks.any? { |callback| callback.applies_to?(@after_task) }
+              task_callable?(configuration, callbacks, @after_task_name)
             elsif @before_task_name
-              @before_task = configuration.find_task(@before_task_name)
-              callbacks.any? { |callback| callback.applies_to?(@before_task) }
+              task_callable?(configuration, callbacks, @before_task_name)
             else
               ! @callback.nil?
             end
@@ -108,6 +118,16 @@ module Capistrano
             "expected configuration to callback #{task_name.inspect} #{@on} #{@before_task_name.inspect}, but did not"
           else
             "expected configuration to callback #{task_name.inspect} on #{@on}, but did not"
+          end
+        end
+
+        failure_message_for_should_not do |actual|
+          if @after_task_name
+            "expected configuration to not callback #{task_name.inspect} #{@on} #{@after_task_name.inspect}, but did"
+          elsif @before_task_name
+            "expected configuration to not callback #{task_name.inspect} #{@on} #{@before_task_name.inspect}, but did"
+          else
+            "expected configuration to not callback #{task_name.inspect} on #{@on}, but did"
           end
         end
 
