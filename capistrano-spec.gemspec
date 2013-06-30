@@ -4,14 +4,14 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{capistrano-spec}
+  s.name = "capistrano-spec"
   s.version = "0.5.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Joshua Nichols", "Karl Matthias", "Peter M Souter", "Jan Graichen"]
-  s.date = %q{2013-06-21}
-  s.description = %q{Helpers and matchers for testing capistrano}
-  s.email = %q{josh@technicalpickles.com}
+  s.date = "2013-06-30"
+  s.description = "Helpers and matchers for testing capistrano"
+  s.email = "josh@technicalpickles.com"
   s.extra_rdoc_files = [
     "LICENSE",
     "README.rdoc"
@@ -32,12 +32,13 @@ Gem::Specification.new do |s|
     "spec/spec.opts",
     "spec/spec_helper.rb",
     "spec/stub_commands_spec.rb",
+    "spec/support/shared/callback_examples.rb",
     "spec/uploaded_spec.rb"
   ]
-  s.homepage = %q{http://github.com/technicalpickles/capistrano-spec}
+  s.homepage = "http://github.com/technicalpickles/capistrano-spec"
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.6.2}
-  s.summary = %q{Test your capistrano recipes}
+  s.rubygems_version = "1.8.23"
+  s.summary = "Test your capistrano recipes"
 
   if s.respond_to? :specification_version then
     s.specification_version = 3
