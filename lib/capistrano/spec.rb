@@ -34,6 +34,14 @@ module Capistrano
         @uploads ||= {}
       end
 
+      def download(from, to, options={}, &block)
+        downloads[to] = {:from => from, :options => options, :block => block}
+      end
+
+      def downloads
+        @downloads ||= {}
+      end
+
       def stubbed_commands
         @stubbed_commands ||= {}
       end
@@ -178,6 +186,30 @@ module Capistrano
             "expected configuration to upload #{path} to #{@to}, but did not"
           else
             "expected configuration to upload #{path}, but did not"
+          end
+        end
+      end
+
+      define :have_downloaded do |path|
+        @from = nil # Reset `to` because it will influence next match otherwise.
+
+        match do |configuration|
+          downloads = configuration.downloads
+          downloads = downloads.select { |f, d| f == path } if path
+          downloads = downloads.select { |f, d| d[:from] == @from } if @from
+          downloads.any?
+        end
+
+        def from(from)
+          @from = from
+          self
+        end
+
+        failure_message_for_should do |actual|
+          if @from
+            "expected configuration to download #{path} from #{@from}, but did not"
+          else
+            "expected configuration to download #{path}, but did not"
           end
         end
       end

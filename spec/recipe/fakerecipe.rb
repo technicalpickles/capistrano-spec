@@ -17,6 +17,7 @@ require 'capistrano'
               set :bar, "baz"
               run('do some stuff')
               upload("foo", "/tmp/foo")
+              download("/tmp/foo", "foo")
               get('/tmp/baz', 'baz')
               put('fake content', '/tmp/put')
             end

@@ -40,6 +40,28 @@ describe Capistrano::Spec do
     end
   end
 
+  describe 'have_downloaded' do
+    let(:error_message) do
+      /expected configuration to download .*\s* from .*\s* but did not/
+    end
+
+    before do
+      fake_recipe.find_and_execute_task('fake:thing')
+    end
+
+    it "will not raise error when download is in recipe" do
+      expect {
+        expect(fake_recipe).to have_downloaded('foo').from('/tmp/foo')
+      }.to_not raise_error(RSpec::Expectations::ExpectationNotMetError, error_message)
+    end
+
+    it "will raise error when run download not in recipe" do
+      expect {
+        expect(fake_recipe).to have_downloaded('bar').from('/tmp/bar')
+      }.to raise_error(RSpec::Expectations::ExpectationNotMetError, error_message)
+    end
+  end
+
   describe 'have_gotten' do
     it "will not raise error when get is in recipe" do
       fake_recipe.find_and_execute_task('fake:thing')
