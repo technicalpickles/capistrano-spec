@@ -26,21 +26,25 @@ describe 'Capistrano has downloaded' do
 
   it 'some file' do
     configuration.download 'source.file', 'target.file'
-    expect{ should have_downloaded }
+
+    expect(configuration).to have_downloaded
   end
 
   it 'a specific file from a specific location' do
     configuration.download_from_to
-    expect{ should have_downloaded('source.file').from('target.file') }
+
+    expect(configuration).to have_downloaded('target.file').from('source.file')
   end
 
   it 'a specific file to some location' do
     configuration.download_from
-    expect{ should have_uploaded('source.file') }
+
+    expect(configuration).to have_downloaded.from('source.file')
   end
 
   it 'some file to a specific location' do
     configuration.download_to
-    expect{ should have_uploaded.to('target.file') }
+
+    expect(configuration).to have_downloaded('target.file')
   end
 end
