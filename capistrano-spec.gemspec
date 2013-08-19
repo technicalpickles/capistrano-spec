@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "capistrano-spec"
-  s.version = "0.6.2"
+  s.version = "0.6.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Joshua Nichols", "Karl Matthias", "Peter M Souter", "Jan Graichen"]
-  s.date = "2013-08-18"
+  s.date = "2013-08-19"
   s.description = "Helpers and matchers for testing capistrano"
   s.email = "josh@technicalpickles.com"
   s.extra_rdoc_files = [
@@ -37,10 +37,10 @@ Gem::Specification.new do |s|
     "spec/uploaded_spec.rb"
   ]
   s.homepage = "http://github.com/technicalpickles/capistrano-spec"
+  s.licenses = ["MIT"]
   s.require_paths = ["lib"]
   s.rubygems_version = "1.8.23"
   s.summary = "Test your capistrano recipes"
-  s.license = "MIT"
 
   if s.respond_to? :specification_version then
     s.specification_version = 3
