@@ -13,6 +13,7 @@ begin
     gem.homepage = "http://github.com/technicalpickles/capistrano-spec"
     gem.authors = ["Joshua Nichols", "Karl Matthias", "Peter M Souter", "Jan Graichen"]
     gem.add_development_dependency "rspec", ">= 2.0.0"
+    gem.license = "MIT"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new
