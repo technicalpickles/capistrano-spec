@@ -187,8 +187,10 @@ As +sudo+ and +invoke_command+ use +run+ internal and +capture+ uses
 
 == Real world examples
 
-* [capistrano-mountaintop](https://github.com/technicalpickles/capistrano-mountaintop/blob/master/spec/capistrano-mountaintop_spec.rb)
-* [moonshine](https://github.com/railsmachine/moonshine/blob/master/spec/moonshine/capistrano_integration_spec.rb)
+* capistrano-mountaintop[https://github.com/technicalpickles/capistrano-mountaintop/blob/master/spec/capistrano-mountaintop_spec.rb]
+* moonshine[https://github.com/railsmachine/moonshine/blob/master/spec/moonshine/capistrano_integration_spec.rb]
+* rvm-capistrano[https://github.com/wayneeseguin/rvm-capistrano/tree/master/spec]
+* capistrano-unicorn[https://github.com/sosedoff/capistrano-unicorn/blob/master/spec/capistrano_integration_spec.rb]
 
 == Note on Patches/Pull Requests
 
