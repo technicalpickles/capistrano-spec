@@ -26,6 +26,14 @@ module Capistrano
         @runs ||= {}
       end
 
+      def run_locally(cmd)
+        runs_locally << cmd unless runs_locally.include?(cmd)
+      end
+
+      def runs_locally
+        @runs_locally ||= []
+      end
+
       def upload(from, to, options={}, &block)
         uploads[from] = {:to => to, :options => options, :block => block}
       end
@@ -224,6 +232,18 @@ module Capistrano
 
         failure_message_for_should do |actual|
           "expected configuration to run #{cmd}, but did not"
+        end
+
+      end
+
+      define :have_run_locally do |cmd|
+
+        match do |configuration|
+          cmd if configuration.runs_locally.include?(cmd)
+        end
+
+        failure_message_for_should do |actual|
+          "expected configuration to run #{cmd} locally, but did not"
         end
 
       end
