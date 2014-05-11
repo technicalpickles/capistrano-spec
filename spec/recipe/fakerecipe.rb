@@ -16,6 +16,7 @@ require 'capistrano'
             task :thing do
               set :bar, "baz"
               run('do some stuff')
+              run_locally('do some stuff locally')
               upload("foo", "/tmp/foo")
               download("/tmp/foo", "foo")
               get('/tmp/baz', 'baz')

@@ -27,6 +27,20 @@ describe Capistrano::Spec do
 
   end
 
+  describe 'have_run_locally' do
+
+    it "will not raise error when run_locally is in recipe" do
+      fake_recipe.find_and_execute_task('fake:thing')
+      expect{ should have_run_locally("do some stuff locally")}.to_not raise_error(RSpec::Expectations::ExpectationNotMetError, /expected configuration to run .*\s* locally, but did not/)
+    end
+
+    it "will raise error when run_locally not in recipe" do
+      fake_recipe.find_and_execute_task('fake:thing')
+      expect{ should have_run_locally("don't find me")}.to raise_error(RSpec::Expectations::ExpectationNotMetError, /expected configuration to run .*\s* locally, but did not/)
+    end
+
+  end
+
   describe 'have_uploaded' do
 
     it "will not raise error when upload is in recipe" do
